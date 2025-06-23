@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري معالجة طلبك - رشق تيك توك</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF0050;
+            --secondary-color: #25F4EE;
+            --dark-bg: #000000;
+            --white: #ffffff;
+            --warning: #FFB800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a1a 50%, var(--dark-bg) 100%);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%2325F4EE" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: gridMove 25s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        .processing-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(37, 244, 238, 0.3);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 60px rgba(37, 244, 238, 0.2);
+        }
+
+        .processing-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 30px 30px 0 0;
+        }
+
+        .logo {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .processing-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--secondary-color), var(--warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .processing-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .user-info {
+            background: rgba(37, 244, 238, 0.1);
+            border: 1px solid rgba(37, 244, 238, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: right;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .processing-animation {
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .gear-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .gear {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            position: relative;
+            animation: spin 2s linear infinite;
+        }
+
+        .gear:nth-child(2) {
+            animation-direction: reverse;
+            animation-duration: 1.5s;
+            border-color: var(--warning);
+        }
+
+        .gear:nth-child(3) {
+            animation-duration: 2.5s;
+            border-color: var(--primary-color);
+        }
+
+        .gear::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+
+        .gear::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 16px;
+            background: currentColor;
+            border-radius: 4px;
+            box-shadow: 
+                0 60px 0 currentColor,
+                42px 30px 0 currentColor,
+                42px -30px 0 currentColor,
+                -42px 30px 0 currentColor,
+                -42px -30px 0 currentColor;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--warning));
+            z-index: 2;
+            width: 0%;
+            animation: progressLine 4s ease-in-out;
+        }
+
+        @keyframes progressLine {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3;
+            transition: all 0.5s ease;
+        }
+
+        .step.active {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--dark-bg);
+            animation: stepPulse 1s infinite;
+        }
+
+        .step.completed {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: var(--dark-bg);
+        }
+
+        @keyframes stepPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .processing-message {
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .message-text {
+            color: var(--warning);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-subtext {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(37, 244, 238, 0.3);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 15%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 70%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 25%;
+            left: 25%;
+            animation-delay: 4s;
+        }
+
+        .floating-icon:nth-child(4) {
+            top: 35%;
+            right: 35%;
+            animation-delay: 1s;
+        }
+
+        .floating-icon:nth-child(5) {
+            bottom: 15%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+
+        .floating-icon:nth-child(6) {
+            top: 50%;
+            left: 10%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-40px) rotate(180deg); opacity: 0.6; }
+        }
+
+        @media (max-width: 768px) {
+            .processing-container {
+                padding: 3rem 2rem;
+                margin: 1rem;
+            }
+
+            .processing-title {
+                font-size: 2rem;
+            }
+
+            .processing-subtitle {
+                font-size: 1rem;
+            }
+
+            .gear-container {
+                gap: 0.5rem;
+            }
+
+            .gear {
+                width: 50px;
+                height: 50px;
+            }
+
+            .info-item {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Icons -->
+    <div class="floating-icons">
+        <div class="floating-icon"><i class="fas fa-cog"></i></div>
+        <div class="floating-icon"><i class="fas fa-users"></i></div>
+        <div class="floating-icon"><i class="fas fa-heart"></i></div>
+        <div class="floating-icon"><i class="fas fa-star"></i></div>
+        <div class="floating-icon"><i class="fab fa-tiktok"></i></div>
+        <div class="floating-icon"><i class="fas fa-rocket"></i></div>
+    </div>
+
+    <!-- Processing Container -->
+    <div class="processing-container">
+        <div class="logo">
+            <i class="fas fa-cogs"></i>
+        </div>
+        
+        <h1 class="processing-title">جاري معالجة طلبك</h1>
+        <p class="processing-subtitle">نقوم الآن بمعالجة طلبك وتحضير المتابعين الحقيقيين لحسابك</p>
+        
+        <div class="user-info" id="userInfo">
+            <div class="info-item">
+                <span class="info-label">اسم المستخدم:</span>
+                <span class="info-value" id="usernameDisplay">@username</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">عدد المتابعين:</span>
+                <span class="info-value" id="followersDisplay">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">المدة المتوقعة:</span>
+                <span class="info-value" id="durationDisplay">3-5 أيام</span>
+            </div>
+        </div>
+        
+        <div class="processing-animation">
+            <div class="gear-container">
+                <div class="gear"></div>
+                <div class="gear"></div>
+                <div class="gear"></div>
+            </div>
+        </div>
+        
+        <div class="progress-steps">
+            <div class="progress-line"></div>
+            <div class="step completed">1</div>
+            <div class="step active">2</div>
+            <div class="step">3</div>
+            <div class="step">4</div>
+        </div>
+        
+        <div class="step-labels">
+            <span>تأكيد البيانات</span>
+            <span>معالجة الطلب</span>
+            <span>تحضير المتابعين</span>
+            <span>إرسال الطلب</span>
+        </div>
+        
+        <div class="processing-message">
+            <div class="message-text">يتم الآن معالجة طلبك بعناية</div>
+            <div class="message-subtext">سيتم تزويد حسابك بمتابعين حقيقيين ونشطين خلال المدة المحددة</div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('tiktok_username') || 'username';
+            const followers = localStorage.getItem('tiktok_followers') || '0';
+            const duration = localStorage.getItem('tiktok_duration') || '3-5';
+            
+            document.getElementById('usernameDisplay').textContent = '@' + username;
+            document.getElementById('followersDisplay').textContent = parseInt(followers).toLocaleString() + ' متابع';
+            document.getElementById('durationDisplay').textContent = duration + ' أيام';
+            
+            // Add entrance animation
+            const container = document.querySelector('.processing-container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(50px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.8s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Animate progress steps
+            setTimeout(() => {
+                const steps = document.querySelectorAll('.step');
+                steps[1].classList.remove('active');
+                steps[1].classList.add('completed');
+                steps[2].classList.add('active');
+            }, 2000);
+        });
+
+        // Auto redirect to success page after 4 seconds
+        setTimeout(() => {
+            window.location.href = 'success.html';
+        }, 4000);
+    </script>
+</body>
+</html>
+
